@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Home Page:
+* Clicking on a business card will move you to the business card page with all the information about it.
+* If you click on the phone button you will be moved to the calling page where you will get "Calling" and the business phone number.
+* If you are logged in you can like any business card.
+* If you are a business account you can create cards, edit or delete them (only cards that you created).
+* If you are an admin you can create cards and edit them (only cards that you created), and you can delete any card.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# About Page:
+* In this page everything about the website is explained.
 
-## Available Scripts
+# Register Page:
+* In this page you can make a new user and decide if you want to be a business account or not.
 
-In the project directory, you can run:
+# Login Page:
+* In this page you can log in to the website.
+* You have 3 login fail attempts.
+* If you fail to log in for 3 times, your IP will be locked for 24 hours.
 
-### `npm start`
+# My Cards Page:
+* In this page you can view all the cards that you created and do all the actions as in Home Page with the same ruling.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# My Favorite Cards Page:
+* In this page you can view all the cards that you liked and do all the actions as in Home Page with the same ruling.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Sandbox Page:
+* In this page you have two buttons with nested routes.
 
-### `npm test`
+# Profile Page:
+* You can access the profile page by clicking on your profile picture.
+* In this page you can edit your information.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Dark/Light Mode:
+* By clicking the moon/sun icons you can change the website to dark/light mode.
 
-### `npm run build`
+# Create Card Page:
+* You can access this page by going to the My Cards Page and clicking the green "+" button.
+* In this page you can create new busness cards.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Card Info Page:
+* You can access this page by clicking on any business card.
+* In this page you can view all the information about the business.
+* You can do actions as in Home Page with the same ruling.
+* The Admin has an extra action in this page which is changing the business number.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Search:
+* You can search any card using the search form in the navigation bar depending on which page you are in.
+* In the CRM page you search users instead.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# CRM Page:
+* As an admin you can access the CRM page where you can view all users, delete users (unless they are an admin) and make/unmake users as business accounts.
+* In this page you can view all the users, delete them (unless they are an admin) and make/unmake users as business accounts.
+* Clicking on a user will take you to the user page with all the information about him, and do all the actions in the CRM with the same ruling.
