@@ -1,17 +1,17 @@
 const config = require("config");
-const joiCardsValidation = require("./joi/cardsValidation");
+const joiPlantsValidation = require("./joi/plantsValidation");
 const joiIdValidation = require("./joi/idValidation");
 
 const validatorOption = config.get("validatorOption");
 
-const createCardValidation = (userInput) => {
+const createPlantValidation = (userInput) => {
   if (validatorOption === "Joi") {
-    return joiCardsValidation.validateCardSchema(userInput);
+    return joiPlantsValidation.validatePlantSchema(userInput);
   }
   throw new Error("Validator Undefined");
 };
 
-const idCardValidation = (userInput) => {
+const idPlantValidation = (userInput) => {
   if (validatorOption === "Joi") {
     return joiIdValidation.validateIdSchema(userInput);
   }
@@ -19,6 +19,6 @@ const idCardValidation = (userInput) => {
 };
 
 module.exports = {
-  createCardValidation,
-  idCardValidation,
+  createPlantValidation,
+  idPlantValidation,
 };

@@ -6,9 +6,8 @@ const {
   DEFAULT_STRING_SCHEMA_REQUIRED,
 } = require("./helpers/mongooseValidation");
 
-const cardSchema = new mongoose.Schema({
+const plantSchema = new mongoose.Schema({
   title: DEFAULT_STRING_SCHEMA_REQUIRED,
-  subTitle: DEFAULT_STRING_SCHEMA_REQUIRED,
   description: { ...DEFAULT_STRING_SCHEMA_REQUIRED, maxLength: 1024 },
   phone: {
     type: String,
@@ -26,14 +25,8 @@ const cardSchema = new mongoose.Schema({
   web: URL,
   image: Image,
   address: Address,
-  bizNumber: {
-    type: Number,
-    minLength: 7,
-    maxLength: 7,
-    required: true,
-    trim: true,
-  },
   likes: [String],
+  cart: [String],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -43,6 +36,6 @@ const cardSchema = new mongoose.Schema({
   },
 });
 
-const Card = mongoose.model("cards", cardSchema);
+const Plant = mongoose.model("plants", plantSchema);
 
-module.exports = Card;
+module.exports = Plant;

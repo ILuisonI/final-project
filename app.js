@@ -1,11 +1,9 @@
 const express = require("express");
-const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const apiRouter = require("./routes/api");
 const config = require("config");
-const initialData = require("./initialData/initialData");
 
 const app = express();
 

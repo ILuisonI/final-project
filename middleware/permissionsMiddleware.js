@@ -1,26 +1,26 @@
 const CustomError = require("../utils/CustomError");
-const { getCardById } = require("../model/cardsService/cardsService");
+const { getPlantById } = require("../model/plantsService/plantsService");
 
-const checkIfBizOwner = async (iduser, idcard, res, next) => {
+const checkIfBizOwner = async (idUser, idPlant, res, next) => {
   try {
-    const cardData = await getCardById(idcard);
-    if (!cardData) {
-      return res.status(400).json({ msg: "Picture Not Found" });
+    const plantData = await getPlantById(idPlant);
+    if (!plantData) {
+      return res.status(400).json({ msg: "Plant Not Found" });
     }
-    if (cardData.user_id == iduser) {
+    if (plantData.user_id == idUser) {
       next();
     } else {
-      res.status(401).json({ msg: "You Are Not The Picture Owner" });
+      res.status(401).json({ msg: "You Are Not The Plant Owner" });
     }
   } catch (err) {
     res.status(400).json(err);
   }
 };
 
-const permissionsMiddleware = (isBiz, isAdmin, isCardOwner, isSameUser) => {
+const permissionsMiddleware = (isBiz, isAdmin, isPlantOwner, isSameUser) => {
   return (req, res, next) => {
     if (!req.userData) {
-      throw new CustomError("Must Provide userData");
+      throw new CustomError("Must Provide User Data");
     }
     if (isBiz === true && isBiz === req.userData.isBusiness) {
       return next();
@@ -31,7 +31,7 @@ const permissionsMiddleware = (isBiz, isAdmin, isCardOwner, isSameUser) => {
     if (isSameUser === true && req.userData._id === req.params.id) {
       return next();
     }
-    if (isCardOwner === true && isCardOwner === req.userData.isBusiness) {
+    if (isPlantOwner === true && isPlantOwner === req.userData.isBusiness) {
       return checkIfBizOwner(req.userData._id, req.params.id, res, next);
     }
     res.status(401).json({ msg: "You Do Not Have Permission!" });
