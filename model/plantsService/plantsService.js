@@ -82,7 +82,7 @@ const addPlantToCart = (plant, userId) => {
   }
 };
 
-const getLikePlants = (plant, userId) => {
+const getLikedPlants = (userId) => {
   if (dbOption === "mongo") {
     return plantsServiceMongo.getLikedPlants(userId, {
       new: true,
@@ -95,7 +95,7 @@ const getLikePlants = (plant, userId) => {
   }
 };
 
-const getPlantsInCart = (plant, userId) => {
+const getPlantsInCart = (userId) => {
   if (dbOption === "mongo") {
     return plantsServiceMongo.getPlantsInCart(userId, {
       new: true,
@@ -117,6 +117,6 @@ module.exports = {
   deletePlant,
   likePlant,
   addPlantToCart,
-  getLikePlants,
+  getLikedPlants,
   getPlantsInCart
 };

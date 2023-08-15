@@ -51,11 +51,12 @@ const deletePlant = (id) => {
 };
 
 const getLikedPlants = (userId) => {
-  return Plant.find({ likes: user._id });
+  console.log(userId);
+  return Plant.find({ likes: userId });
 };
 
 const getPlantsInCart = (userId) => {
-  return Plant.find({ cart: user._id });
+  return Plant.find({ cart: userId });
 };
 
 module.exports = {
