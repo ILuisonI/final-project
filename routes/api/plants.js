@@ -83,8 +83,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//http://localhost:8181/api/plants/:id
-router.patch("/:id",
+//http://localhost:8181/api/plants/like-plant/:id
+router.patch("/like-plant/:id",
   authmw,
   async (req, res) => {
     try {
@@ -106,8 +106,8 @@ router.patch("/:id",
     }
   });
 
-//http://localhost:8181/api/plants/:id
-router.patch("/:id",
+//http://localhost:8181/api/plants/add-to-cart/:id
+router.patch("/add-to-cart/:id",
   authmw,
   async (req, res) => {
     try {
