@@ -45,7 +45,7 @@ router.get("/my-fav-plants",
       if (likedPlants.length > 0) {
         res.json(likedPlants);
       } else {
-        res.json({ msg: "You Don't Have Any Liked Plants Yet" });
+        return;
       }
     } catch (err) {
       res.status(400).json(err);
