@@ -82,6 +82,32 @@ const addPlantToCart = (plant, userId) => {
   }
 };
 
+const getLikePlants = (plant, userId) => {
+  if (dbOption === "mongo") {
+    return plantsServiceMongo.getLikedPlants(userId, {
+      new: true,
+    });
+  }
+  if (dbOption === "atlas") {
+    return plantsServiceMongo.getLikedPlants(userId, {
+      new: true,
+    });
+  }
+};
+
+const getPlantsInCart = (plant, userId) => {
+  if (dbOption === "mongo") {
+    return plantsServiceMongo.getPlantsInCart(userId, {
+      new: true,
+    });
+  }
+  if (dbOption === "atlas") {
+    return plantsServiceMongo.getPlantsInCart(userId, {
+      new: true,
+    });
+  }
+};
+
 module.exports = {
   createPlant,
   getAllPlants,
@@ -91,4 +117,6 @@ module.exports = {
   deletePlant,
   likePlant,
   addPlantToCart,
+  getLikePlants,
+  getPlantsInCart
 };

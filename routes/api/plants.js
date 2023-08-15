@@ -150,4 +150,38 @@ router.delete(
   }
 );
 
+//http://localhost:8181/api/plants/my-fav-plants
+router.get("/my-fav-plants",
+  authmw,
+  permissionsMiddleware(true, false, false, false),
+  async (req, res) => {
+    try {
+      const likedPlants = await PlantsServiceModel.getLikePlants(req.userData._id);
+      if (likedPlants.length > 0) {
+        res.json(likedPlants);
+      } else {
+        res.json({ msg: "You Don't Have Any Liked Plants Yet" });
+      }
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+
+//http://localhost:8181/api/plants/my-cart
+router.get("/my-cart",
+  authmw,
+  permissionsMiddleware(true, false, false, false),
+  async (req, res) => {
+    try {
+      const plantsInCart = await PlantsServiceModel.getPlantsInCart(req.userData._id);
+      if (plantsInCart.length > 0) {
+        res.json(plantsInCart);
+      } else {
+        res.json({ msg: "You Don't Have Any Liked Plants Yet" });
+      }
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+
 module.exports = router;

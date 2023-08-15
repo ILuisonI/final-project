@@ -41,13 +41,21 @@ const addPlantToCart = (plant, userId) => {
     plant.cart.push(userId);
     return plant.save();
   }
-  const plantRemovedUserLike = plant.cart.filter((id) => id !== userId);
-  plant.cart = plantRemovedUserLike;
+  const plantRemovedUserFromCart = plant.cart.filter((id) => id !== userId);
+  plant.cart = plantRemovedUserFromCart;
   return plant.save();
 };
 
 const deletePlant = (id) => {
   return Card.findByIdAndDelete(id);
+};
+
+const getLikedPlants = (userId) => {
+  return Plant.find({ likes: user._id });
+};
+
+const getPlantsInCart = (userId) => {
+  return Plant.find({ cart: user._id });
 };
 
 module.exports = {
@@ -59,4 +67,6 @@ module.exports = {
   deletePlant,
   likePlant,
   addPlantToCart,
+  getLikedPlants,
+  getPlantsInCart,
 };
