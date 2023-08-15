@@ -4,6 +4,7 @@ const logger = require("morgan");
 const cors = require("cors");
 const apiRouter = require("./routes/api");
 const config = require("config");
+const initialData = require("./initialData/initialData");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+initialData();
 app.use("/api", apiRouter);
 app.use((req, res, next) => {
   res.status(404).json({ err: "Page Not Found" });
