@@ -2,8 +2,8 @@ const { default: mongoose } = require("mongoose");
 const Plant = require("./Plant");
 
 const createPlant = (plantToSave) => {
-  let card = new Plant(plantToSave);
-  return card.save();
+  let plant = new Plant(plantToSave);
+  return plant.save();
 };
 
 const getAllPlants = () => {
@@ -47,16 +47,15 @@ const addPlantToCart = (plant, userId) => {
 };
 
 const deletePlant = (id) => {
-  return Card.findByIdAndDelete(id);
+  return Plant.findByIdAndDelete(id);
 };
 
-const getLikedPlants = (userId) => {
-  console.log(userId);
-  return Plant.find({ likes: userId });
+const getLikedPlants = (user_id) => {
+  return Plant.find({ likes: user_id });
 };
 
-const getPlantsInCart = (userId) => {
-  return Plant.find({ cart: userId });
+const getPlantsInCart = (user_id) => {
+  return Plant.find({ cart: user_id });
 };
 
 module.exports = {

@@ -25,11 +25,7 @@ router.get("/my-plants",
   async (req, res) => {
     try {
       const allOwnPlants = await PlantsServiceModel.getPlantsByUserId(req.userData._id);
-      if (allOwnPlants.length > 0) {
-        res.json(allOwnPlants);
-      } else {
-        res.json({ msg: "You Don't Have Any Plants Yet" });
-      }
+      res.json(allOwnPlants);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -41,12 +37,7 @@ router.get("/my-fav-plants",
   async (req, res) => {
     try {
       const likedPlants = await PlantsServiceModel.getLikedPlants(req.userData._id);
-      console.log(req.userData._id);
-      if (likedPlants.length > 0) {
-        res.json(likedPlants);
-      } else {
-        return;
-      }
+      res.json(likedPlants);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -58,11 +49,7 @@ router.get("/my-cart",
   async (req, res) => {
     try {
       const plantsInCart = await PlantsServiceModel.getPlantsInCart(req.userData._id);
-      if (plantsInCart.length > 0) {
-        res.json(plantsInCart);
-      } else {
-        res.json({ msg: "You Don't Have Any Plants In Your Cart" });
-      }
+      res.json(plantsInCart);
     } catch (err) {
       res.status(400).json(err);
     }
@@ -74,11 +61,7 @@ router.get("/:id", async (req, res) => {
     const id = req.params.id;
     await idPlantValidation({ id });
     const plantFromDB = await PlantsServiceModel.getPlantById(id);
-    if (!plantFromDB) {
-      res.json({ msg: "Plant Is Not Found!" });
-    } else {
-      res.json(plantFromDB);
-    }
+    res.json(plantFromDB);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -92,7 +75,7 @@ router.post("/",
     try {
       await createPlantValidation(req.body);
       let normalPlant = await normalizePlant(req.body, req.userData._id);
-      await PlantsServiceModel.createplant(normalPlant);
+      await PlantsServiceModel.createPlant(normalPlant);
       res.json({ msg: "Plant Created Successfully" });
     } catch (err) {
       res.status(400).json(err);
