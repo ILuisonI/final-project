@@ -4,7 +4,7 @@
     "dbOption": "atlas",
     "tokenOption": "jwt",
     "dbConfig": {
-        "url": "mongodb://127.0.0.1:27017/PicturesDB"
+        "url": "mongodb://127.0.0.1:27017/PlantsDB"
     },
     "jwt": "780y94563hj2y45wopiunj",
     "file": "atlas"
