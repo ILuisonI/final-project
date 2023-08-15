@@ -69,6 +69,23 @@ router.get("/",
     }
   });
 
+//http://localhost:8181/api/users/userInfo
+router.get("/userInfo",
+  authmw,
+  permissionsMiddleware(false, true, false, true),
+  async (req, res) => {
+    try {
+      const userFromDB = await usersServiceModel.getUserById(req.userData._id);
+      if (userFromDB) {
+        res.json(userFromDB);
+      } else {
+        res.json({ msg: "Could Not Find The User" });
+      }
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
+
 //http://localhost:8181/api/users/:id
 router.get("/:id",
   authmw,
