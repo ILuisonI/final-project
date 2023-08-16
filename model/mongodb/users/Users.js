@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-const Name = require("./Name");
-const Address = require("./Address");
-const Image = require("./Image");
 
 const {
   URL,

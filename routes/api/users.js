@@ -5,6 +5,7 @@ const {
   registerUserValidation,
   loginUserValidation,
   idUserValidation,
+  editUserValidation,
 } = require("../../validation/usersValidationService");
 const normalizeUser = require("../../model/usersService/helpers/normalizationUserService");
 const usersServiceModel = require("../../model/usersService/usersService");
@@ -105,8 +106,8 @@ router.get("/:id",
     }
   });
 
-//http://localhost:8181/api/users/:id
-router.put("/:id",
+//http://localhost:8181/api/users/update-user/:id
+router.put("/update-user/:id",
   authmw,
   permissionsMiddleware(false, false, false, true),
   async (req, res) => {
@@ -119,10 +120,8 @@ router.put("/:id",
       }
       req.body.isAdmin = userFromDB.isAdmin;
       req.body.isBusiness = userFromDB.isBusiness;
-      await registerUserValidation(req.body);
       let editedUser = normalizeUser(req.body);
-      editedUser.password = await hashService.generateHash(req.body.password);
-      await registerUserValidation(editedUser);
+      await editUserValidation(editedUser);
       await usersServiceModel.updateUser(
         id,
         editedUser
@@ -134,20 +133,18 @@ router.put("/:id",
     }
   });
 
-//http://localhost:8181/api/users/:id
-router.patch("/:id",
+//http://localhost:8181/api/users/change-biz
+router.patch("/change-biz",
   authmw,
   permissionsMiddleware(false, false, false, true),
   async (req, res) => {
     try {
-      const id = req.params.id;
-      await idUserValidation({ id });
-      const userFromDB = await usersServiceModel.getUserById(id);
+      const userFromDB = await usersServiceModel.getUserById(req.userData._id);
       if (!userFromDB) {
         throw new CustomError("Could Not Find The User");
       }
       const newUserData = await usersServiceModel.updateUser(
-        id,
+        req.userData._id,
         { isBusiness: !userFromDB.isBusiness }
       );
       const token = await generateToken({
