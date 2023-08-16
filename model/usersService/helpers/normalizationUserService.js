@@ -3,9 +3,7 @@ const normalizationUserMongo = require("../../mongodb/users/helpers/normalizatio
 const dbOption = config.get("dbOption");
 
 const normalizationUserService = (userData) => {
-  if (dbOption === "mongo") {
-    return normalizationUserMongo(userData);
-  }
+  return normalizationUserMongo(userData);
 };
 
 module.exports = normalizationUserService;

@@ -3,8 +3,16 @@ const Name = require("./Name");
 const Address = require("./Address");
 const Image = require("./Image");
 
+const {
+  URL,
+  DEFAULT_STRING_SCHEMA,
+  DEFAULT_STRING_SCHEMA_REQUIRED,
+} = require("./helpers/mongooseValidation");
+
 const schema = new mongoose.Schema({
-  name: Name,
+  firstName: DEFAULT_STRING_SCHEMA_REQUIRED,
+  middleName: DEFAULT_STRING_SCHEMA,
+  lastName: DEFAULT_STRING_SCHEMA_REQUIRED,
   phone: {
     type: String,
     required: true,
@@ -25,8 +33,24 @@ const schema = new mongoose.Schema({
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
     ),
   },
-  image: Image,
-  address: Address,
+  imageUrl: URL,
+  imageAlt: DEFAULT_STRING_SCHEMA_REQUIRED,
+  state: DEFAULT_STRING_SCHEMA,
+  country: DEFAULT_STRING_SCHEMA_REQUIRED,
+  city: DEFAULT_STRING_SCHEMA_REQUIRED,
+  street: DEFAULT_STRING_SCHEMA_REQUIRED,
+  houseNumber: {
+    type: Number,
+    required: true,
+    trim: true,
+    minLength: 1,
+  },
+  zip: {
+    type: Number,
+    trim: true,
+    minLength: 4,
+    default: 0,
+  },
   isAdmin: { type: Boolean, default: false },
   isBusiness: { type: Boolean, default: false },
   createdAt: {
