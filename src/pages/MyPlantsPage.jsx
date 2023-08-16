@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import CardComponent from "../components/CardComponent";
+import PlantComponent from "../components/PlantComponent";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,18 +10,18 @@ import { useSelector } from "react-redux";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ROUTES from "../routes/ROUTES";
 
-const MyCardsPage = () => {
-    const [originalCardsArr, setOriginalCardsArr] = useState(null);
-    const [cardsArr, setCardsArr] = useState(null);
+const MyPlantsPage = () => {
+    const [originalPlantsArr, setOriginalPlantsArr] = useState(null);
+    const [plantsArr, setPlantsArr] = useState(null);
     const navigate = useNavigate();
     let qparams = useQueryParams();
     const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
 
     useEffect(() => {
         axios
-            .get("/cards/my-cards")
+            .get("/plants/my-plants")
             .then(({ data }) => {
-                setOriginalCardsArr(data);
+                setOriginalPlantsArr(data);
                 filterFunc(data);
             })
             .catch((err) => {
@@ -32,33 +32,33 @@ const MyCardsPage = () => {
     }, []);
 
     const filterFunc = (data) => {
-        if (!cardsArr && !data) {
+        if (!plantsArr && !data) {
             return;
         }
         let filter = "";
         if (qparams.filter) {
             filter = qparams.filter;
         }
-        if (!cardsArr && data) {
-            setOriginalCardsArr(data);
-            setCardsArr(data.filter(card => card.title.startsWith(filter) || card.bizNumber.startsWith(filter)));
+        if (!plantsArr && data) {
+            setOriginalPlantsArr(data);
+            setPlantsArr(data.filter(card => card.title.startsWith(filter) || card.bizNumber.startsWith(filter)));
             return;
         }
-        if (cardsArr) {
-            let newOriginalCardsArr = JSON.parse(JSON.stringify(originalCardsArr));
-            setCardsArr(newOriginalCardsArr.filter(card => card.title.startsWith(filter) || card.bizNumber.startsWith(filter)));
+        if (plantsArr) {
+            let newOriginalPlantsArr = JSON.parse(JSON.stringify(originalPlantsArr));
+            setPlantsArr(newOriginalPlantsArr.filter(card => card.title.startsWith(filter) || card.bizNumber.startsWith(filter)));
         }
     };
 
     useEffect(() => {
         filterFunc();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [qparams.filter, originalCardsArr]);
+    }, [qparams.filter, originalPlantsArr]);
 
-    const handleDeleteFromCardsArr = async (id) => {
+    const handleDeleteFromPlantsArr = async (id) => {
         try {
-            await axios.delete("cards/" + id);
-            setCardsArr((newCardsArr) => newCardsArr.filter(item => item._id !== id));
+            await axios.delete("plants/" + id);
+            setPlantsArr((newPlantsArr) => newPlantsArr.filter(item => item._id !== id));
         } catch (err) {
             console.log("Delete Error:", err.message);
             toast.error('Oops');
@@ -67,9 +67,17 @@ const MyCardsPage = () => {
 
     const handleLikeBtnClick = async (id) => {
         try {
-            await axios.patch(`/cards/card-like/${id}`)
+            await axios.patch(`/plants/like-plant/${id}`)
         } catch (err) {
             console.log("Like Error:", err.message);
+        }
+    };
+
+    const handleAddToCartBtnClick = async (id) => {
+        try {
+            await axios.patch(`/plants/add-to-cart/${id}`)
+        } catch (err) {
+            console.log("Cart Error:", err.message);
         }
     };
 
@@ -77,7 +85,7 @@ const MyCardsPage = () => {
         navigate(`/edit/${id}`);
     };
 
-    if (!cardsArr) {
+    if (!plantsArr) {
         return <CircularProgress sx={{ position: "fixed", left: "50vw", top: "50vh" }} />;
     }
 
@@ -91,14 +99,15 @@ const MyCardsPage = () => {
                 alignItems="center"
                 justify="center"
                 margin={"auto"}>
-                {cardsArr.map((item) => (
+                {plantsArr.map((item) => (
                     <Grid item xs={12} sm={6} lg={4} md={6} key={item._id + Date.now()} >
-                        <CardComponent
-                            card={item}
-                            onDelete={handleDeleteFromCardsArr}
+                        <PlantComponent
+                            plant={item}
+                            onDelete={handleDeleteFromPlantsArr}
                             onEdit={handleEditBtn}
                             isBiz={isBiz}
-                            likeCard={handleLikeBtnClick}
+                            likePlant={handleLikeBtnClick}
+                            addToCart={handleAddToCartBtnClick}
                         />
                     </Grid>
                 ))}
@@ -110,4 +119,4 @@ const MyCardsPage = () => {
     )
 };
 
-export default MyCardsPage;
+export default MyPlantsPage;

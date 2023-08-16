@@ -13,6 +13,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PhoneIcon from '@mui/icons-material/Phone';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 import PropTypes from "prop-types";
 import { Fragment, useEffect, useState } from "react";
@@ -20,63 +22,71 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const CardComponent = ({ card, onDelete, onEdit, isAdmin, isBiz, likeCard }) => {
+const PlantComponent = ({ plant, onDelete, onEdit, isAdmin, isBiz, likePlant, addToCart }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [isMyCard, setIsMyCard] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+  const [isMyPlant, setIsMyPlant] = useState(false);
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
 
   const navigate = useNavigate();
-
   useEffect(() => {
     if (payload) {
-      setIsLiked(card && card.likes.includes(payload._id));
-      setIsMyCard(card && card.user_id === payload._id);
+      setIsLiked(plant && plant.likes.includes(payload._id));
+      setIsInCart(plant && plant.cart.includes(payload._id));
+      setIsMyPlant(plant && plant.user_id === payload._id);
     }
-  }, [card, payload, isMyCard]);
+  }, [plant, payload, isMyPlant]);
 
   const handleDeleteBtnClick = () => {
-    onDelete(card._id);
-    toast.success('Card Deleted!');
+    onDelete(plant._id);
+    toast.success('Plant Deleted!');
   };
 
   const handleEditBtnClick = () => {
-    onEdit(card._id);
+    onEdit(plant._id);
   };
 
   const handleLikeBtnClick = () => {
-    likeCard(card._id);
+    likePlant(plant._id);
     setIsLiked(!isLiked);
     if (!isLiked) {
-      toast.success('Card Added To Favorites!');
+      toast.success('Plant Added To Favorites!');
     } else {
-      toast.error('Card Removed From Favorites!');
+      toast.error('Plant Removed From Favorites!');
+    }
+  };
+
+  const handleCartBtnClick = () => {
+    addToCart(plant._id);
+    setIsInCart(!isInCart);
+    if (!isInCart) {
+      toast.success('Plant Added To Cart!');
+    } else {
+      toast.error('Plant Removed From Cart!');
     }
   };
 
   const handleCardClick = () => {
-    navigate(`/cardinfo/${card._id}`);
+    navigate(`/cardinfo/${plant._id}`);
   };
 
   const handleCallClick = () => {
-    navigate(`/call/${card.phone}`);
+    navigate(`/call/${plant.phone}`);
   };
 
   return (
     <Fragment>
       <Card sx={{ maxWidth: 345 }}>
         <CardActionArea onClick={handleCardClick}>
-          <CardHeader title={card.title} subheader={card.subTitle} />
-          <CardMedia component="img" image={card.image.url} alt={card.image.alt} />
+          <CardHeader title={plant.title} />
+          <CardMedia component="img" image={plant.image.url} alt={plant.image.alt} />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              <b>Phone: </b>{card.phone}
+              <b>Phone: </b>{plant.phone}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              <b>Address: </b>{card.state && card.state + ", "}{card.country}{", " + card.state && card.state}{", " + card.city + ", " + card.street + ", " + card.houseNumber}{", " + card.zipCode && card.zipCode}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              <b>Business Number: </b>{card.bizNumber}
+              <b>Address: </b>{plant.state && plant.state + ", "}{plant.country}{", " + plant.state && plant.state}{", " + plant.city + ", " + plant.street + ", " + plant.houseNumber}{", " + plant.zipCode && plant.zipCode}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -84,7 +94,7 @@ const CardComponent = ({ card, onDelete, onEdit, isAdmin, isBiz, likeCard }) => 
           <Typography sx={{
             marginRight: "auto"
           }}>
-            {isMyCard ?
+            {isMyPlant ?
               (
                 (
                   isBiz &&
@@ -129,11 +139,32 @@ const CardComponent = ({ card, onDelete, onEdit, isAdmin, isBiz, likeCard }) => 
             </IconButton>
             {
               loggedIn &&
-              <IconButton
-                color={isLiked ? "error" : ""}
-                aria-label="add to favorites" onClick={handleLikeBtnClick}>
-                <FavoriteIcon />
-              </IconButton>
+              <Fragment>
+                <IconButton
+                  color={isLiked ? "error" : ""}
+                  aria-label="add to favorites" onClick={handleLikeBtnClick}>
+                  <FavoriteIcon />
+                </IconButton>
+              </Fragment>
+            }
+            {
+              loggedIn &&
+              (
+                !isInCart ?
+                  (
+                    <IconButton
+                      aria-label="add to cart" onClick={handleCartBtnClick}>
+                      <AddShoppingCartIcon />
+                    </IconButton>
+                  )
+                  :
+                  (
+                    <IconButton
+                      aria-label="add to cart" onClick={handleCartBtnClick}>
+                      <RemoveShoppingCartIcon />
+                    </IconButton>
+                  )
+              )
             }
           </Typography>
         </CardActions>
@@ -142,12 +173,12 @@ const CardComponent = ({ card, onDelete, onEdit, isAdmin, isBiz, likeCard }) => 
   );
 };
 
-CardComponent.propTypes = {
-  card: PropTypes.object.isRequired,
+PlantComponent.propTypes = {
+  plant: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   isAdmin: PropTypes.bool,
   isBiz: PropTypes.bool,
 };
 
-export default CardComponent;
+export default PlantComponent;

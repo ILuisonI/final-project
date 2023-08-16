@@ -109,12 +109,12 @@ const EditCardPage = () => {
             setInputsErrorsState(joiResponse);
             if (!joiResponse) {
                 await axios.put("/cards/" + id, inputState);
-                toast.success("Card Edited Successfully!");
+                toast.success("Plant Edited Successfully!");
                 navigate(ROUTES.MYCARDS);
             }
         } catch (err) {
             toast.error('Oops');
-            console.log("Save Error:", err.message);
+            console.log("Save Error:", err.response.data);
         }
     }
 

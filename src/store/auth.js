@@ -17,7 +17,7 @@ const authSlice = createSlice({
             }
             state.loggedIn = true;
             state.payload = action.payload;
-            state.isBiz = action.payload.biz;
+            state.isBiz = action.payload.isBusiness;
             state.isAdmin = action.payload.isAdmin;
         },
         logout(state) {

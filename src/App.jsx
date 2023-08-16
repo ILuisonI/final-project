@@ -19,13 +19,13 @@ import ROUTES from "./routes/ROUTES";
 const light = {
   palette: {
     mode: "light",
-  }
+  },
 };
 
 const dark = {
   palette: {
     mode: "dark",
-  }
+  },
 };
 
 function App() {

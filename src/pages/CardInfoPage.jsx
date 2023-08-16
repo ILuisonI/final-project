@@ -9,7 +9,6 @@ import {
     CircularProgress,
     Box,
     Grid,
-    Button,
 } from "@mui/material";
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -31,7 +30,6 @@ const CardInfoPage = () => {
     const [card, setCard] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
     const [isMyCard, setIsMyCard] = useState(false);
-    const [bizNumber, setBizNumber] = useState("0");
 
     const navigate = useNavigate();
 
@@ -56,7 +54,7 @@ const CardInfoPage = () => {
             }
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, isLiked, bizNumber]);
+    }, [id, isLiked]);
 
     useEffect(() => {
         if (payload) {
@@ -102,18 +100,6 @@ const CardInfoPage = () => {
         navigate(`/call/${card.phone}`);
     };
 
-    const handleChangeBizBtnClick = async () => {
-        try {
-            await axios.patch(`/cards/bizNumber/${card._id}`);
-            toast.success("Business Number Changed!");
-
-            //For the purpose of re-rendering
-            setBizNumber(card.bizNumber);
-        } catch (err) {
-            console.log("Error:", err.message);
-        }
-    };
-
     if (!card) {
         return <CircularProgress sx={{ position: "fixed", left: "50vw", top: "50vh" }} />;
     }
@@ -154,12 +140,6 @@ const CardInfoPage = () => {
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     {card.state && card.state + ", "}{card.country}{", " + card.state && card.state}{", " + card.city + ", " + card.street + ", " + card.houseNumber}{", " + card.zipCode && card.zipCode}
-                                </Typography>
-                                <Typography variant="h6" color="text.primary">
-                                    <b>Business Number: </b>
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {card.bizNumber}
                                 </Typography>
                                 <Typography variant="h6" color="text.primary">
                                     <b>Description: </b>
@@ -250,14 +230,6 @@ const CardInfoPage = () => {
                                         </IconButton>
                                     }
                                 </Typography>
-                            </CardActions>
-                            <CardActions disableSpacing>
-                                {
-                                    payload && payload.isAdmin &&
-                                    <Button color="primary" onClick={handleChangeBizBtnClick} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                                        Change Business Number
-                                    </Button>
-                                }
                             </CardActions>
                         </Card>
                     </Grid>

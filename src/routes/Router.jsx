@@ -7,17 +7,14 @@ import EditCardPage from "../pages/EditCardPage";
 import ProfilePage from "../pages/ProfilePage";
 import SuperProtectedRoute from "../components/SuperProtectedRoute";
 import LogoutPage from "../pages/LogoutPage";
-import MyCardsPage from "../pages/MyCardsPage";
-import FavCardsPage from "../pages/FavCardsPage";
+import FavPlantsPage from "../pages/FavPlantsPage";
 import CreateCardPage from "../pages/CreateCardPage";
 import CardInfoPage from "../pages/CardInfoPage";
 import AboutPage from "../pages/AboutPage";
 import CallingPage from "../pages/CallingPage";
-import ReRenderPage from "../pages/ReRenderPages/ReRenderPage";
-import SanboxPage from "../pages/SandboxPage";
-import UseMemoPage from "../pages/ReRenderPages/UseMemoPage";
 import CRMPage from "../pages/CRMPage";
 import UserInfoPage from "../pages/UserInfoPage";
+import MyPlantsPage from "../pages/MyPlantsPage";
 
 const Router = () => {
     return (
@@ -41,13 +38,13 @@ const Router = () => {
             <Route path={ROUTES.PROFILE} element={<SuperProtectedRoute
                 needPermission={false}
                 element={<ProfilePage />} />} />
-            <Route path={ROUTES.MYCARDS} element={<SuperProtectedRoute
+            <Route path={ROUTES.MYPLANTS} element={<SuperProtectedRoute
                 needPermission={true}
                 isBiz={true}
-                element={<MyCardsPage />} />} />
-            <Route path={ROUTES.FAVCARDS} element={<SuperProtectedRoute
+                element={<MyPlantsPage />} />} />
+            <Route path={ROUTES.FAVPLANTS} element={<SuperProtectedRoute
                 needPermission={false}
-                element={<FavCardsPage />} />} />
+                element={<FavPlantsPage />} />} />
             <Route path={ROUTES.CREATECARD} element={<SuperProtectedRoute
                 needPermission={true}
                 isBiz={true}
@@ -56,14 +53,6 @@ const Router = () => {
                 needPermission={true}
                 isAdmin={true}
                 element={<CRMPage />} />} />
-            <Route path={ROUTES.SANDBOX} element={
-                <SuperProtectedRoute
-                    needPermission={true}
-                    isAdmin={true}
-                    element={<SanboxPage />} />}>
-                <Route path={ROUTES.RERENDER} element={<ReRenderPage />} />
-                <Route path={ROUTES.USEMEMO} element={<UseMemoPage />} />
-            </Route>
             <Route path={ROUTES.LOGOUT} element={<SuperProtectedRoute
                 needPermission={false}
                 logout={true}

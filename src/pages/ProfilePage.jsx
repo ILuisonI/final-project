@@ -16,6 +16,7 @@ import ROUTES from "../routes/ROUTES";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { useSelector } from "react-redux";
+import useLoggedIn from "../hooks/useLoggedIn";
 
 const ProfilePage = () => {
     const [inputState, setInputState] = useState({
@@ -31,8 +32,8 @@ const ProfilePage = () => {
         city: "",
         street: "",
         houseNumber: "",
-        zipCode: "",
-        biz: false,
+        zip: "",
+        isBusiness: false,
     });
 
     const [showError, setShowError] = useState({
@@ -45,8 +46,10 @@ const ProfilePage = () => {
         city: false,
         street: false,
         houseNumber: false,
-        zipCode: false,
+        zip: false,
     });
+
+    const [userData, setUserData] = useState({});
 
     const [inputsErrorsState, setInputsErrorsState] = useState({});
 
@@ -56,10 +59,13 @@ const ProfilePage = () => {
 
     const payload = useSelector((bigPie) => bigPie.authSlice.payload);
 
+    const loggedIn = useLoggedIn();
+
     useEffect(() => {
         (async () => {
             try {
                 const { data } = await axios.get("/users/userInfo/");
+                setUserData(data);
                 let newInputState = { ...data };
                 if (data._id !== payload._id) {
                     toast.error("You Do Not Have Permission!");
@@ -71,12 +77,14 @@ const ProfilePage = () => {
                 if (!newInputState.state) {
                     newInputState.state = "";
                 }
-                if (!newInputState.zipCode) {
-                    newInputState.zipCode = "";
+                if (!newInputState.zip) {
+                    newInputState.zip = "";
                 }
                 delete newInputState.password;
                 delete newInputState.isAdmin;
                 delete newInputState._id;
+                delete newInputState.createdAt;
+                delete newInputState.__v;
                 setInputState(newInputState);
             } catch (err) {
                 console.log("Error From Axios:", err.message);
@@ -97,30 +105,17 @@ const ProfilePage = () => {
 
     const handleBtnClick = async () => {
         try {
-            await axios.put("users/userInfo/", {
-                firstName: inputState.firstName,
-                middleName: inputState.middleName,
-                lastName: inputState.lastName,
-                phone: inputState.phone,
-                email: inputState.email,
-                imageUrl: inputState.imageUrl,
-                imageAlt: inputState.imageAlt,
-                state: inputState.state,
-                country: inputState.country,
-                city: inputState.city,
-                street: inputState.street,
-                houseNumber: inputState.houseNumber,
-                //server won't allow empty zipCode so I made the default value to be 1
-                zipCode: inputState.zipCode ? inputState.zipCode : 1,
-                biz: inputState.biz,
-            });
+            await axios.put(`/users/update-user/${userData._id}`, inputState);
+            if (inputState.isBusiness !== userData.isBusiness) {
+                const { data } = await axios.patch(`/users/change-biz/${userData._id}`);
+                localStorage.setItem("token", data.token);
+                loggedIn();
+            }
         } catch (err) {
             console.log("Error From Axios:", err.message);
         }
-        localStorage.clear();
         toast.success('Profile Edited Successfully!');
-        toast.success('Please Login Again!');
-        navigate(ROUTES.LOGIN);
+        navigate(ROUTES.HOME);
     };
 
     useEffect(() => {
@@ -405,16 +400,16 @@ const ProfilePage = () => {
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
-                                id="zipCode"
+                                id="zip"
                                 label="Zip Code"
                                 name="zipCode"
                                 onChange={handleInputChange}
-                                value={inputState.zipCode}
+                                value={inputState.zip}
                             />
                             {
-                                showError.zipCode && inputsErrorsState && inputsErrorsState.zipCode && (
+                                showError.zipCode && inputsErrorsState && inputsErrorsState.zip && (
                                     <Alert severity="warning">
-                                        {inputsErrorsState.zipCode.map(item =>
+                                        {inputsErrorsState.zip.map(item =>
                                             <div key={"imageUrl-errors" + item}>{item}.</div>
                                         )}
                                     </Alert>
@@ -423,7 +418,7 @@ const ProfilePage = () => {
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={
-                                    <Checkbox checked={inputState.biz} id="biz" name="biz" onChange={handleCheckedChange} color="primary" />
+                                    <Checkbox checked={inputState.isBusiness} id="isBusiness" name="isBusiness" onChange={handleCheckedChange} color="primary" />
                                 }
                                 label="Business Account"
                             />

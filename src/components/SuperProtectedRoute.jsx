@@ -10,7 +10,7 @@ const SuperProtectedRoute = ({ element, isAdmin, isBiz, needPermission, logout }
         if (needPermission) {
             if (
                 (isAdmin && payload && payload.isAdmin) ||
-                (isBiz && payload && payload.biz)
+                (isBiz && payload && payload.isBusiness)
             ) {
                 return element;
             }

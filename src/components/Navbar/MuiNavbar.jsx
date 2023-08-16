@@ -8,7 +8,6 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import MiniNavLinkComponent from "./MiniNavLinkComponent";
 
 import ROUTES from "../../routes/ROUTES";
@@ -43,8 +42,8 @@ const notAuthPages = [
 
 const authedPages = [
   {
-    label: "Fav Cards",
-    url: ROUTES.FAVCARDS,
+    label: "Favorite Plants",
+    url: ROUTES.FAVPLANTS,
   },
   {
     label: "Logout",
@@ -106,24 +105,22 @@ const MuiNavbar = () => {
     dispatch(darkThemeActions.changeTheme());
   };
   return (
-    <AppBar position="static">
+    <AppBar color="success" position="static">
       <Container maxWidth="xl">
         <Toolbar>
-          <AdbIcon />
+          <Typography sx={{ textDecoration: 'none' }} component={Link} color="textPrimary" to={ROUTES.HOME} noWrap>
+            <Typography width={"40px"} height={"40px"} component={"img"} src="favicon.png" />
+          </Typography>
           <Typography sx={{ textDecoration: 'none' }} component={Link} color="textPrimary" to={ROUTES.HOME} variant="h6" noWrap>
-            Yes
+            MyPlant
           </Typography>
 
           {/* main navbar */}
           <Box paddingLeft={"20px"} sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <NavLinkComponent {...aboutPage} />
             {
-              isAdmin &&
-              <NavLinkComponent key={"linkSandbox"} label={"Sandbox"} url={ROUTES.SANDBOX} />
-            }
-            {
               isBiz &&
-              <NavLinkComponent key={"linkMyCards"} label={"My Cards"} url={ROUTES.MYCARDS} />
+              <NavLinkComponent key={"linkMyPlants"} label={"My Plants"} url={ROUTES.MYPLANTS} />
             }
             {
               isLoggedIn &&

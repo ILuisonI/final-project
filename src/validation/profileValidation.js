@@ -13,9 +13,9 @@ const profileSchema = Joi.object({
     country: Joi.string().min(2).max(256).required(),
     city: Joi.string().min(2).max(256).required(),
     street: Joi.string().min(2).max(256).required(),
-    houseNumber: Joi.string().min(2).max(256).required(),
-    zipCode: Joi.number().min(1).max(99999999).allow(''),
-    biz: Joi.boolean().required(),
+    houseNumber: Joi.number().min(2).max(256).required(),
+    zip: Joi.number().min(1).max(99999999).allow(''),
+    isBusiness: Joi.boolean().required(),
 });
 
 const validateProfileSchema = (userInput) => validation(profileSchema, userInput);

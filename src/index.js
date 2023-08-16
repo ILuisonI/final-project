@@ -28,7 +28,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-document.title = "Yes";
+document.title = "MyPlant";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
