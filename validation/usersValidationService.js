@@ -29,7 +29,7 @@ const idUserValidation = (userInput) => {
 
 const editUserValidation = (userInput) => {
   if (validatorOption === "Joi") {
-    return joiIdValidation.validateIdSchema(userInput);
+    return joiIdValidation.joiEditValidation(userInput);
   }
   throw new Error("Validator Undefined");
 };
