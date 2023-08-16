@@ -122,6 +122,7 @@ router.put("/update-user/:id",
       req.body.isBusiness = userFromDB.isBusiness;
       let editedUser = normalizeUser(req.body);
       await editUserValidation(editedUser);
+      console.log(editedUser);
       await usersServiceModel.updateUser(
         id,
         editedUser
