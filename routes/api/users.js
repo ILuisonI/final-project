@@ -122,7 +122,6 @@ router.put("/update-user/:id",
       req.body.isBusiness = userFromDB.isBusiness;
       let editedUser = normalizeUser(req.body);
       await editUserValidation(editedUser);
-      console.log(editedUser);
       await usersServiceModel.updateUser(
         id,
         editedUser
@@ -134,13 +133,15 @@ router.put("/update-user/:id",
     }
   });
 
-//http://localhost:8181/api/users/change-biz
-router.patch("/change-biz",
+//http://localhost:8181/api/users/change-biz/:id
+router.patch("/change-biz/:id",
   authmw,
   permissionsMiddleware(false, false, false, true),
   async (req, res) => {
     try {
-      const userFromDB = await usersServiceModel.getUserById(req.userData._id);
+      const id = req.params.id;
+      await idUserValidation({ id });
+      const userFromDB = await usersServiceModel.getUserById(id);
       if (!userFromDB) {
         throw new CustomError("Could Not Find The User");
       }

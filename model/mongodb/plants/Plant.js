@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const Image = require("./Image");
-const Address = require("./Address");
 const {
   URL,
   DEFAULT_STRING_SCHEMA_REQUIRED,
@@ -23,10 +21,16 @@ const plantSchema = new mongoose.Schema({
     unique: true,
   },
   web: URL,
-  image: Image,
-  address: Address,
+  imageUrl: URL,
+  imageAlt: DEFAULT_STRING_SCHEMA_REQUIRED,
   likes: [String],
   cart: [String],
+  price: {
+    type: Number,
+    trim: true,
+    minLength: 1,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -4,38 +4,20 @@
     "description": "save the card pls",
     "phone": "0500000000",
     "email": "kenny1@gmail.com",
-    "address": {
-      "country": "Israel",
-      "city": "Ashkeluna",
-      "street": "jump street",
-      "houseNumber": 23,
-      "zip": 0
-    }
+    "price": 5
   },
   {
     "title": "card2",
     "description": "save the card pls",
     "phone": "0500000000",
     "email": "kenny2@gmail.com",
-    "address": {
-      "country": "Israel",
-      "city": "Ashkeluna",
-      "street": "jump street",
-      "houseNumber": 23,
-      "zip": 0
-    }
+    "price": 10
   },
   {
     "title": "card3",
     "description": "save the card pls",
     "phone": "0500000000",
     "email": "kenny3@gmail.com",
-    "address": {
-      "country": "Israel",
-      "city": "Ashkeluna",
-      "street": "jump street",
-      "houseNumber": 23,
-      "zip": 0
-    }
+    "price": 20
   }
 ]
