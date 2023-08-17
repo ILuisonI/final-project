@@ -73,8 +73,8 @@ router.post("/",
   permissionsMiddleware(true, false, false, false),
   async (req, res) => {
     try {
-      await createPlantValidation(req.body);
       let normalPlant = await normalizePlant(req.body, req.userData._id);
+      await createPlantValidation(normalPlant);
       await PlantsServiceModel.createPlant(normalPlant);
       res.json({ msg: "Plant Created Successfully" });
     } catch (err) {
