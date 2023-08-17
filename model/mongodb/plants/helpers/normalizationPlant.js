@@ -1,4 +1,4 @@
-const normalizePlant = async (plant, userId) => {
+const normalizePlant = (plant, userId) => {
   if (!plant.imageUrl) {
     plant.imageUrl = null;
   }
