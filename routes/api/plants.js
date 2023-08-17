@@ -87,7 +87,8 @@ router.put("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     await idPlantValidation({ id });
-    let editedPlant = normalizePlant(req.body);
+    const plantFromDB = await PlantsServiceModel.getPlantById(id);
+    let editedPlant = normalizePlant(req.body, plantFromDB.user_id);
     await createPlantValidation(editedPlant);
     await PlantsServiceModel.updatePlant(
       id,
