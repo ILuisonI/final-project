@@ -17,12 +17,17 @@ import SearchPartial from "./SearchPartial";
 import NavLinkComponent from "./NavLinkComponent";
 import useLoggedIn from "../../hooks/useLoggedIn";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { Avatar } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import useCart from "../../hooks/useCart";
 
 const aboutPage = {
   label: "About",
@@ -56,8 +61,14 @@ const MuiNavbar = () => {
   const [userIcon, setUserIcon] = React.useState(null);
   const [userAlt, setUserAlt] = React.useState(null);
 
+  const navigate = useNavigate();
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCartClick = () => {
+    navigate(`/`);
   };
 
   const handleClose = () => {
@@ -72,9 +83,13 @@ const MuiNavbar = () => {
 
   const isBiz = useSelector((bigPie) => bigPie.authSlice.isBiz);
 
-  const isAdmin = useSelector((bigPie) => bigPie.authSlice.isAdmin);
-
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+
+  const cart = useSelector((bigPie) => bigPie.cartSlice.cartItemsNumber);
+
+  const cartHook = useCart();
+
+  const [cartItems, setCartItems] = useState(0);
 
   const loggedIn = useLoggedIn();
 
@@ -93,6 +108,17 @@ const MuiNavbar = () => {
     })();
   }, [payload]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        await cartHook();
+        setCartItems(cart);
+      } catch (err) {
+        console.log("Error", err.message);
+      }
+    })();
+  }, [cart, cartHook]);
+
   const logoutClick = () => {
     localStorage.clear();
     loggedIn();
@@ -101,9 +127,19 @@ const MuiNavbar = () => {
     toast.success('Logout Successful');
   };
 
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: -3,
+      top: 0,
+      border: `1px solid ${theme.palette.background.paper}`,
+      padding: '0 4px',
+    },
+  }));
+
   const changeTheme = () => {
     dispatch(darkThemeActions.changeTheme());
   };
+
   return (
     <AppBar color="success" position="static">
       <Container maxWidth="xl">
@@ -154,6 +190,13 @@ const MuiNavbar = () => {
                 isDarkTheme ?
                   <LightModeIcon /> : <DarkModeIcon />
               }
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "none", md: "flex" }, my: 2, p: 2 }}>
+            <IconButton onClick={handleCartClick} aria-label="cart">
+              <StyledBadge badgeContent={cartItems} color="error">
+                <ShoppingCartIcon />
+              </StyledBadge>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -221,14 +264,30 @@ const MuiNavbar = () => {
                   </Box>
                 </MenuItem>
               }
+              {
+                isLoggedIn &&
+                <MenuItem
+                  sx={{
+                    justifyContent: "center"
+                  }}
+                  key={"miniLinksCart"}>
+                  <Box sx={{
+                    my: 2,
+                    p: 2,
+                    display: { xs: "block", md: "none" },
+                  }}>
+                    <IconButton onClick={handleCartClick} aria-label="cart">
+                      <StyledBadge badgeContent={cartItems} color="error">
+                        <ShoppingCartIcon />
+                      </StyledBadge>
+                    </IconButton>
+                  </Box>
+                </MenuItem>
+              }
               <MiniNavLinkComponent isDarkMode={isDarkTheme} {...aboutPage} />
               {
-                isAdmin &&
-                <MiniNavLinkComponent key={"linkSandbox"} isDarkMode={isDarkTheme} label={"Sandbox"} url={"/error"} />
-              }
-              {
                 isBiz &&
-                <MiniNavLinkComponent key={"linkMyCards"} isDarkMode={isDarkTheme} label={"My Cards"} url={ROUTES.MYCARDS} />
+                <MiniNavLinkComponent key={"linkMyPlants"} isDarkMode={isDarkTheme} label={"My Plants"} url={ROUTES.MYCARDS} />
               }
               {
                 isLoggedIn ?

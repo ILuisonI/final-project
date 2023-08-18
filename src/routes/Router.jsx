@@ -3,18 +3,18 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage"
 import LoginPage from "../pages/LoginPage";
 import ROUTES from "./ROUTES";
-import EditCardPage from "../pages/EditCardPage";
+import EditCardPage from "../pages/EditPlantPage";
 import ProfilePage from "../pages/ProfilePage";
 import SuperProtectedRoute from "../components/SuperProtectedRoute";
 import LogoutPage from "../pages/LogoutPage";
 import FavPlantsPage from "../pages/FavPlantsPage";
-import CreateCardPage from "../pages/CreateCardPage";
-import CardInfoPage from "../pages/CardInfoPage";
+import CreatePlantPage from "../pages/CreatePlantPage";
 import AboutPage from "../pages/AboutPage";
 import CallingPage from "../pages/CallingPage";
 import CRMPage from "../pages/CRMPage";
 import UserInfoPage from "../pages/UserInfoPage";
 import MyPlantsPage from "../pages/MyPlantsPage";
+import PlantInfoPage from "../pages/PlantInfoPage";
 
 const Router = () => {
     return (
@@ -25,7 +25,7 @@ const Router = () => {
             <Route path={ROUTES.CALLING} element={<CallingPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.CARDINFO} element={<CardInfoPage />} />
+            <Route path={ROUTES.PLANTINFO} element={<PlantInfoPage />} />
             <Route path={ROUTES.USERINFO} element={<SuperProtectedRoute
                 needPermission={true}
                 isAdmin={true}
@@ -45,10 +45,10 @@ const Router = () => {
             <Route path={ROUTES.FAVPLANTS} element={<SuperProtectedRoute
                 needPermission={false}
                 element={<FavPlantsPage />} />} />
-            <Route path={ROUTES.CREATECARD} element={<SuperProtectedRoute
+            <Route path={ROUTES.CREATEPLANT} element={<SuperProtectedRoute
                 needPermission={true}
                 isBiz={true}
-                element={<CreateCardPage />} />} />
+                element={<CreatePlantPage />} />} />
             <Route path={ROUTES.CRM} element={<SuperProtectedRoute
                 needPermission={true}
                 isAdmin={true}

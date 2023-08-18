@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
-import { validateCardParamSchema } from "../validation/cardValidation";
+import { validateProfileParamSchema } from "../validation/profileValidation";
 
 const UserInfoPage = () => {
     const { id } = useParams();
@@ -38,8 +38,8 @@ const UserInfoPage = () => {
         city: "",
         street: "",
         houseNumber: "",
-        zipCode: "",
-        biz: false,
+        zip: "",
+        isBusiness: false,
     });
     const [isBiz, setIsBiz] = useState(false);
 
@@ -48,7 +48,7 @@ const UserInfoPage = () => {
     useEffect(() => {
         (async () => {
             try {
-                const errors = validateCardParamSchema({ id });
+                const errors = validateProfileParamSchema({ id });
                 if (errors) {
                     navigate(ROUTES.HOME);
                     return;
@@ -64,7 +64,7 @@ const UserInfoPage = () => {
     }, [id]);
 
     useEffect(() => {
-        setIsBiz(user.biz);
+        setIsBiz(user.isBusiness);
     }, [user]);
 
     const handleDeleteBtnClick = async () => {

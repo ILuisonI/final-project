@@ -22,14 +22,14 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ROUTES from "../routes/ROUTES";
-import { validateCardParamSchema } from "../validation/cardValidation";
+import { validatePlantParamSchema } from "../validation/plantValidation";
 
-const CardInfoPage = () => {
+const PlantInfoPage = () => {
     const { id } = useParams();
 
-    const [card, setCard] = useState(null);
+    const [plant, setPlant] = useState(null);
     const [isLiked, setIsLiked] = useState(false);
-    const [isMyCard, setIsMyCard] = useState(false);
+    const [isMyPlant, setIsMyPlant] = useState(false);
 
     const navigate = useNavigate();
 
@@ -39,16 +39,16 @@ const CardInfoPage = () => {
     useEffect(() => {
         (async () => {
             try {
-                const errors = validateCardParamSchema({ id });
+                const errors = validatePlantParamSchema({ id });
                 if (errors) {
                     navigate(ROUTES.HOME);
                     return;
                 }
-                const { data } = await axios.get("/cards/card/" + id);
-                let newCard = { ...data };
-                newCard.url = newCard.image.url;
-                newCard.alt = newCard.image.alt;
-                setCard(newCard);
+                const { data } = await axios.get("/plants/" + id);
+                let newPlant = { ...data };
+                newPlant.url = newPlant.imageUrl;
+                newPlant.alt = newPlant.imageAlt;
+                setPlant(newPlant);
             } catch (err) {
                 console.log("Error From Axios:", err.message);
             }
@@ -58,15 +58,15 @@ const CardInfoPage = () => {
 
     useEffect(() => {
         if (payload) {
-            setIsLiked(card && card.likes.includes(payload._id));
-            setIsMyCard(card && card.user_id === payload._id);
+            setIsLiked(plant && plant.likes.includes(payload._id));
+            setIsMyPlant(plant && plant.user_id === payload._id);
         }
-    }, [card, payload, isMyCard]);
+    }, [plant, payload, isMyPlant]);
 
     const handleDeleteBtnClick = async () => {
         try {
-            await axios.delete("cards/" + id);
-            toast.success('Card Deleted!');
+            await axios.delete("plants/" + id);
+            toast.success('Plant Deleted!');
             navigate(ROUTES.HOME);
         } catch (err) {
             console.log("Delete Error:", err.message);
@@ -78,36 +78,36 @@ const CardInfoPage = () => {
         navigate(`/edit/${id}`);
     };
 
-    const likeCard = async (id) => {
+    const likePlant = async (id) => {
         try {
-            await axios.patch(`/cards/card-like/${id}`)
+            await axios.patch(`/plants/like-plant/${id}`)
         } catch (err) {
-            console.log("Error", err.message);
+            console.log("Edit Error:", err.message);
         }
     };
 
     const handleLikeBtnClick = () => {
-        likeCard(id);
+        likePlant(id);
         setIsLiked(!isLiked);
         if (!isLiked) {
-            toast.success('Card Added To Favorites!');
+            toast.success('plant Added To Favorites!');
         } else {
-            toast.error('Card Removed From Favorites!');
+            toast.error('plant Removed From Favorites!');
         }
     };
 
     const handleCallClick = () => {
-        navigate(`/call/${card.phone}`);
+        navigate(`/call/${plant.phone}`);
     };
 
-    if (!card) {
+    if (!plant) {
         return <CircularProgress sx={{ position: "fixed", left: "50vw", top: "50vh" }} />;
     }
 
     return (
         <Box>
-            <h1>Card Info Page</h1>
-            <h3>Here you can find all the information about the business</h3>
+            <h1>Plant Info Page</h1>
+            <h3>Here you can find all the information about the plant</h3>
             <hr />
             <Grid
                 container
@@ -119,66 +119,60 @@ const CardInfoPage = () => {
                 <Fragment>
                     <Grid item xs={3}>
                         <Card sx={{ maxWidth: 345 }}>
-                            {/* <CardActionArea> */}
-                            <CardHeader title={card.title} subheader={"Created At: " + card.createdAt.split("T").join(" ").split(".")[0]} />
-                            <CardMedia component="img" image={card.url} alt={card.alt} />
+                            {/* <plantActionArea> */}
+                            <CardHeader title={plant.title} subheader={"Created At: " + plant.createdAt.split("T").join(" ").split(".")[0]} />
+                            <CardMedia component="img" image={plant.imageUrl} alt={plant.imageAlt} />
                             <CardContent>
                                 <Typography variant="h6" color="text.primary">
-                                    <b>Subtitle: </b>
+                                    <b>Description: </b>
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {card.subTitle}
+                                    {plant.description}
                                 </Typography>
                                 <Typography variant="h6" color="text.primary">
                                     <b>Phone: </b>
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {card.phone}
-                                </Typography>
-                                <Typography variant="h6" color="text.primary">
-                                    <b>Address: </b>
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {card.state && card.state + ", "}{card.country}{", " + card.state && card.state}{", " + card.city + ", " + card.street + ", " + card.houseNumber}{", " + card.zipCode && card.zipCode}
-                                </Typography>
-                                <Typography variant="h6" color="text.primary">
-                                    <b>Description: </b>
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {card.description}
+                                    {plant.phone}
                                 </Typography>
                                 <Typography variant="h6" color="text.primary">
                                     <b>Email: </b>
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {card.email}
+                                    {plant.email}
                                 </Typography>
                                 {
-                                    card.web &&
+                                    plant.web &&
                                     (
                                         <Fragment>
                                             <Typography variant="h6" color="text.primary">
                                                 <b>Website: </b>
                                             </Typography>
                                             <Typography variant="body2" color="text.secondary">
-                                                {card.web}
+                                                {plant.web}
                                             </Typography>
                                         </Fragment>
                                     )
                                 }
                                 <Typography variant="h6" color="text.primary">
+                                    <b>Price: </b>
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {plant.price}$
+                                </Typography>
+                                <Typography variant="h6" color="text.primary">
                                     <b>Likes: </b>
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {card.likes.length}
+                                    {plant.likes.length}
                                 </Typography>
                             </CardContent>
-                            {/* </CardActionArea> */}
+                            {/* </plantActionArea> */}
                             <CardActions disableSpacing>
                                 <Typography sx={{
                                     marginRight: "auto"
                                 }}>
-                                    {payload && isMyCard ?
+                                    {payload && isMyPlant ?
                                         (
                                             (
                                                 payload && payload.biz &&
@@ -239,4 +233,4 @@ const CardInfoPage = () => {
     );
 };
 
-export default CardInfoPage;
+export default PlantInfoPage;

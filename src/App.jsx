@@ -15,6 +15,7 @@ import RecentActorsIcon from '@mui/icons-material/RecentActors';
 
 import { Link } from "react-router-dom";
 import ROUTES from "./routes/ROUTES";
+import useCart from "./hooks/useCart";
 
 const light = {
   palette: {
@@ -31,10 +32,12 @@ const dark = {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const loggedIn = useLoggedIn();
+  const cart = useCart();
 
   useEffect(() => {
     (async () => {
       await loggedIn();
+      await cart();
       setIsLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

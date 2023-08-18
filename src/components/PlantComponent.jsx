@@ -21,6 +21,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
 const PlantComponent = ({ plant, onDelete, onEdit, isAdmin, isBiz, likePlant, addToCart }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -28,6 +29,7 @@ const PlantComponent = ({ plant, onDelete, onEdit, isAdmin, isBiz, likePlant, ad
   const [isMyPlant, setIsMyPlant] = useState(false);
   const payload = useSelector((bigPie) => bigPie.authSlice.payload);
   const loggedIn = useSelector((bigPie) => bigPie.authSlice.loggedIn);
+  const cart = useCart();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -67,8 +69,18 @@ const PlantComponent = ({ plant, onDelete, onEdit, isAdmin, isBiz, likePlant, ad
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        await cart();
+      } catch (err) {
+        console.log("Error", err.message);
+      }
+    })();
+  }, [isInCart, cart]);
+
   const handleCardClick = () => {
-    navigate(`/cardinfo/${plant._id}`);
+    navigate(`/plantinfo/${plant._id}`);
   };
 
   const handleCallClick = () => {
@@ -80,13 +92,13 @@ const PlantComponent = ({ plant, onDelete, onEdit, isAdmin, isBiz, likePlant, ad
       <Card sx={{ maxWidth: 345 }}>
         <CardActionArea onClick={handleCardClick}>
           <CardHeader title={plant.title} />
-          <CardMedia component="img" image={plant.image.url} alt={plant.image.alt} />
+          <CardMedia component="img" image={plant.imageUrl} alt={plant.imageAlt} />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
               <b>Phone: </b>{plant.phone}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              <b>Address: </b>{plant.state && plant.state + ", "}{plant.country}{", " + plant.state && plant.state}{", " + plant.city + ", " + plant.street + ", " + plant.houseNumber}{", " + plant.zipCode && plant.zipCode}
+              <b>Price: </b>{plant.price}$
             </Typography>
           </CardContent>
         </CardActionArea>

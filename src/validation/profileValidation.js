@@ -18,6 +18,15 @@ const profileSchema = Joi.object({
     isBusiness: Joi.boolean().required(),
 });
 
+const profileParamSchema = Joi.object({
+    id: Joi.number().min(1).required()
+});
+
 const validateProfileSchema = (userInput) => validation(profileSchema, userInput);
+const validateProfileParamSchema = (userInput) => {
+    validation(profileParamSchema, userInput);
+};
+
+export { validateProfileParamSchema };
 
 export default validateProfileSchema;

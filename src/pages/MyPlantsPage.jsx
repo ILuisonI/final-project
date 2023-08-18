@@ -91,8 +91,8 @@ const MyPlantsPage = () => {
 
     return (
         <Box>
-            <h1>My Cards Page</h1>
-            <h3>Here you can find all of your business cards</h3>
+            <h1>My Plants Page</h1>
+            <h3>Here you can find all of your plants</h3>
             <hr />
             <Grid container
                 spacing={2}
@@ -112,7 +112,7 @@ const MyPlantsPage = () => {
                     </Grid>
                 ))}
             </Grid>
-            <Typography sx={{ textDecoration: 'none', position: "fixed", right: "10px", bottom: "60px" }} component={Link} color="textPrimary" to={ROUTES.CREATECARD} noWrap>
+            <Typography sx={{ textDecoration: 'none', position: "fixed", right: "10px", bottom: "60px" }} component={Link} color="textPrimary" to={ROUTES.CREATEPLANT} noWrap>
                 <AddCircleIcon color="success" fontSize="large" />
             </Typography>
         </Box>
