@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 });
 
 //http://localhost:8181/api/users
-router.get("/",
+router.get("/getAllUsers",
   authmw,
   permissionsMiddleware(false, true, false, false),
   async (req, res) => {
@@ -136,7 +136,7 @@ router.put("/update-user/:id",
 //http://localhost:8181/api/users/change-biz/:id
 router.patch("/change-biz/:id",
   authmw,
-  permissionsMiddleware(false, false, false, true),
+  permissionsMiddleware(false, true, false, true),
   async (req, res) => {
     try {
       const id = req.params.id;
@@ -146,22 +146,26 @@ router.patch("/change-biz/:id",
         throw new CustomError("Could Not Find The User");
       }
       const newUserData = await usersServiceModel.updateUser(
-        req.userData._id,
+        id,
         { isBusiness: !userFromDB.isBusiness }
       );
-      const token = await generateToken({
-        _id: newUserData._id,
-        isAdmin: newUserData.isAdmin,
-        isBusiness: newUserData.isBusiness,
-      });
-      res.json({ token });
+      if (id === req.userData._id) {
+        const token = await generateToken({
+          _id: newUserData._id,
+          isAdmin: newUserData.isAdmin,
+          isBusiness: newUserData.isBusiness,
+        });
+        res.json({ token });
+      } else {
+        res.json("User Businesss Status Changed");
+      }
     } catch (err) {
       res.status(400).json(err);
     }
   });
 
 //http://localhost:8181/api/users/:id
-router.delete("/:id",
+router.delete("/deleteUser/:id",
   authmw,
   permissionsMiddleware(false, true, false, true),
   async (req, res) => {

@@ -2,21 +2,21 @@
   {
     "title": "card1",
     "description": "save the card pls",
-    "phone": "0500000000",
+    "phone": "050000000",
     "email": "kenny1@gmail.com",
     "price": 5
   },
   {
     "title": "card2",
     "description": "save the card pls",
-    "phone": "0500000000",
+    "phone": "050000000",
     "email": "kenny2@gmail.com",
     "price": 10
   },
   {
     "title": "card3",
     "description": "save the card pls",
-    "phone": "0500000000",
+    "phone": "050000000",
     "email": "kenny3@gmail.com",
     "price": 20
   }
