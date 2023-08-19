@@ -15,6 +15,7 @@ import CRMPage from "../pages/CRMPage";
 import UserInfoPage from "../pages/UserInfoPage";
 import MyPlantsPage from "../pages/MyPlantsPage";
 import PlantInfoPage from "../pages/PlantInfoPage";
+import CartPage from "../pages/CartPage";
 
 const Router = () => {
     return (
@@ -26,6 +27,9 @@ const Router = () => {
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.PLANTINFO} element={<PlantInfoPage />} />
+            <Route path={ROUTES.CART} element={<SuperProtectedRoute
+                needPermission={false}
+                element={<CartPage />} />} />
             <Route path={ROUTES.USERINFO} element={<SuperProtectedRoute
                 needPermission={true}
                 isAdmin={true}

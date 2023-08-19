@@ -8,6 +8,7 @@ const ROUTES = {
     PROFILE: "/profile",
     MYPLANTS: "/myplants",
     FAVPLANTS: "/favplants",
+    CART: "/cart",
     CREATEPLANT: "/createplant",
     PLANTINFO: "/plantinfo/:id",
     CALLING: "/call/:phone",

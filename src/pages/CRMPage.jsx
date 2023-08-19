@@ -4,18 +4,24 @@ import { toast } from "react-toastify";
 import useQueryParams from "../hooks/useQueryParams";
 import { Box, CircularProgress, Grid } from "@mui/material";
 import UserCardComponent from "../components/UserCardComponent";
+import { useSelector } from "react-redux";
+import useLoggedIn from "../hooks/useLoggedIn";
 
 const CRMPage = () => {
     const [originalUsersArr, setOriginalUsersArr] = useState(null);
     const [usersArr, setUsersArr] = useState(null);
+
+    const payload = useSelector((bigPie) => bigPie.authSlice.payload);
+    const loggedIn = useLoggedIn();
+
     let qparams = useQueryParams();
 
     useEffect(() => {
         axios
             .get("/users/getAllUsers")
             .then(({ data }) => {
-                setOriginalUsersArr(data.users);
-                filterFunc(data.users);
+                setOriginalUsersArr(data);
+                filterFunc(data);
             })
             .catch((err) => {
                 console.log("Error From Axios:", err.message);
@@ -58,24 +64,13 @@ const CRMPage = () => {
         }
     };
 
-    const handleBizBtnClick = async (user, isBiz) => {
+    const handleBizBtnClick = async (userId) => {
         try {
-            await axios.put("users/userInfo/" + user._id, {
-                firstName: user.firstName,
-                middleName: user.middleName,
-                lastName: user.lastName,
-                phone: user.phone,
-                email: user.email,
-                imageUrl: user.imageUrl,
-                imageAlt: user.imageAlt,
-                state: user.state,
-                country: user.country,
-                city: user.city,
-                street: user.street,
-                houseNumber: user.houseNumber,
-                zipCode: user.zipCode,
-                biz: isBiz,
-            });
+            const { data } = await axios.patch(`users/change-biz/${userId}`);
+            if (userId === payload._id) {
+                localStorage.setItem("token", data.token);
+                loggedIn();
+            }
         } catch (err) {
             console.log("Edit Error:", err.message);
         }

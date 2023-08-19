@@ -16,9 +16,11 @@ import PropTypes from "prop-types";
 import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const UserCardComponent = ({ user, onDelete, biz }) => {
-    const [isBiz, setIsBiz] = useState(user.biz);
+    const [isBiz, setIsBiz] = useState(user.isBusiness);
+    const payload = useSelector((bigPie) => bigPie.authSlice.payload);
 
     const navigate = useNavigate();
 
@@ -28,8 +30,13 @@ const UserCardComponent = ({ user, onDelete, biz }) => {
     };
 
     useEffect(() => {
-        setIsBiz(isBiz);
-    }, [isBiz]);
+        if (payload._id === user._id) {
+            setIsBiz(payload.isBusiness);
+        } else {
+            setIsBiz(isBiz);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isBiz, payload]);
 
     const handleUserClick = () => {
         navigate(`/userinfo/${user._id}`);
@@ -37,16 +44,16 @@ const UserCardComponent = ({ user, onDelete, biz }) => {
 
     const handleCheckedChange = (ev) => {
         const checked = ev.target.checked;
-        setIsBiz(checked)
-        biz(user, checked);
-        toast.success('User Updated!');
+        setIsBiz(checked);
+        biz(user._id);
+        toast.success('User Business Status Updated!');
     };
 
     return (
         <Fragment>
             <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea onClick={handleUserClick}>
-                    <CardHeader title={user.firstName + " " + user.middleName + " " + user.lastName} />
+                    <CardHeader title={user.firstName + " " + (user.middleName ? (user.middleName + " ") : "") + user.lastName} />
                     <CardMedia component="img" image={user.imageUrl} alt={user.imageAlt} />
                 </CardActionArea>
 

@@ -80,11 +80,11 @@ function App() {
             <BottomNavigationAction component={Link} to={ROUTES.ABOUT} label="About" icon={<InfoIcon />} />
             {
               isLoggedIn &&
-              <BottomNavigationAction component={Link} to={ROUTES.FAVCARDS} label="Favorite Cards" icon={<FavoriteIcon />} />
+              <BottomNavigationAction component={Link} to={ROUTES.FAVPLANTS} label="Favorite Plants" icon={<FavoriteIcon />} />
             }
             {
               isBiz &&
-              <BottomNavigationAction component={Link} to={ROUTES.MYCARDS} label="My Cards" icon={<RecentActorsIcon />} />
+              <BottomNavigationAction component={Link} to={ROUTES.MYPLANTS} label="My Plants" icon={<RecentActorsIcon />} />
             }
           </BottomNavigation>
         </Paper>

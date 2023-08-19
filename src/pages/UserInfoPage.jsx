@@ -101,7 +101,7 @@ const UserInfoPage = () => {
                 city: user.city,
                 street: user.street,
                 houseNumber: user.houseNumber,
-                zipCode: user.zipCode,
+                zip: user.zip,
                 biz: isBiz,
             });
         } catch (err) {

@@ -68,7 +68,7 @@ const MuiNavbar = () => {
   };
 
   const handleCartClick = () => {
-    navigate(`/`);
+    navigate(ROUTES.CART);
   };
 
   const handleClose = () => {
@@ -148,7 +148,7 @@ const MuiNavbar = () => {
             <Typography width={"40px"} height={"40px"} component={"img"} src="favicon.png" />
           </Typography>
           <Typography sx={{ textDecoration: 'none' }} component={Link} color="textPrimary" to={ROUTES.HOME} variant="h6" noWrap>
-            MyPlant
+            Blooming Roots
           </Typography>
 
           {/* main navbar */}
@@ -192,13 +192,16 @@ const MuiNavbar = () => {
               }
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" }, my: 2, p: 2 }}>
-            <IconButton onClick={handleCartClick} aria-label="cart">
-              <StyledBadge badgeContent={cartItems} color="error">
-                <ShoppingCartIcon />
-              </StyledBadge>
-            </IconButton>
-          </Box>
+          {
+            isLoggedIn &&
+            <Box sx={{ display: { xs: "none", md: "flex" }, my: 2, p: 2 }}>
+              <IconButton onClick={handleCartClick} aria-label="cart">
+                <StyledBadge badgeContent={cartItems} color="error">
+                  <ShoppingCartIcon />
+                </StyledBadge>
+              </IconButton>
+            </Box>
+          }
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {
               isLoggedIn ?
