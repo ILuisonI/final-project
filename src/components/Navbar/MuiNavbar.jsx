@@ -28,6 +28,7 @@ import { styled } from '@mui/material/styles';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import useCart from "../../hooks/useCart";
+import useProfilePic from "../../hooks/useProfilePic";
 
 const aboutPage = {
   label: "About",
@@ -87,7 +88,11 @@ const MuiNavbar = () => {
 
   const cart = useSelector((bigPie) => bigPie.cartSlice.cartItemsNumber);
 
+  const profilePic = useSelector((bigPie) => bigPie.profilePicSlice.profilePic);
+
   const cartHook = useCart();
+
+  const profilePicHook = useProfilePic();
 
   const [cartItems, setCartItems] = useState(0);
 
@@ -99,6 +104,7 @@ const MuiNavbar = () => {
     }
     (async () => {
       try {
+        await profilePicHook();
         const user = await axios.get("/users/userInfo/");
         setUserIcon(user.data.imageUrl);
         setUserAlt(user.data.imageAlt);
@@ -106,7 +112,7 @@ const MuiNavbar = () => {
         console.log("Error", err.message);
       }
     })();
-  }, [payload]);
+  }, [payload, profilePic, profilePicHook]);
 
   useEffect(() => {
     (async () => {
