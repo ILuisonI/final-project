@@ -28,11 +28,11 @@ const permissionsMiddleware = (isBiz, isAdmin, isPlantOwner, isSameUser) => {
     if (isAdmin === true && isAdmin === req.userData.isAdmin) {
       return next();
     }
-    if (isSameUser === true && req.userData._id === req.params.id) {
-      return next();
-    }
     if (isPlantOwner === true && isPlantOwner === req.userData.isBusiness) {
       return checkIfBizOwner(req.userData._id, req.params.id, res, next);
+    }
+    if (isSameUser === true && req.userData._id === req.params.id) {
+      return next();
     }
     res.status(401).json({ msg: "You Do Not Have Permission!" });
   };

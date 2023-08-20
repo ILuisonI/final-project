@@ -4,8 +4,9 @@ const editSchema = Joi.object({
     firstName: Joi.string().min(2).max(256).required(),
     middleName: Joi.string().min(2).max(256).allow(""),
     lastName: Joi.string().min(2).max(256).required(),
-    phone: Joi.string()
-        .regex(new RegExp(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/))
+    phone: Joi.string().regex(
+        new RegExp(/^[0-9]{9}$/))
+        .messages({ 'string.pattern.base': `Phone number must have 9 digits.` })
         .required(),
     email: Joi.string()
         .regex(

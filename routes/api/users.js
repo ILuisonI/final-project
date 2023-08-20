@@ -14,12 +14,13 @@ const CustomError = require("../../utils/CustomError");
 const authmw = require("../../middleware/authMiddleware");
 const permissionsMiddleware = require("../../middleware/permissionsMiddleware");
 
-//http://localhost:8181/api/users
-router.post("/", async (req, res) => {
+//http://localhost:8181/api/users/register
+router.post("/register", async (req, res) => {
   try {
     await registerUserValidation(req.body);
     req.body.password = await hashService.generateHash(req.body.password);
     let normalUser = normalizeUser(req.body);
+    console.log("Hi");
     await usersServiceModel.registerUser(normalUser);
     res.json({ msg: "Registered Successfully" });
   } catch (err) {
@@ -71,9 +72,8 @@ router.get("/getAllUsers",
   });
 
 //http://localhost:8181/api/users/userInfo
-router.get("/userInfo",
+router.get("/userInfo/",
   authmw,
-  permissionsMiddleware(false, true, false, true),
   async (req, res) => {
     try {
       const userFromDB = await usersServiceModel.getUserById(req.userData._id);
@@ -88,7 +88,7 @@ router.get("/userInfo",
   });
 
 //http://localhost:8181/api/users/:id
-router.get("/:id",
+router.get("/userInfo/:id",
   authmw,
   permissionsMiddleware(false, true, false, true),
   async (req, res) => {
