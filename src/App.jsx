@@ -51,12 +51,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    root.style.backgroundRepeat = "no-repeat";
-    root.style.backgroundSize = "cover"
     if (isDarkTheme) {
       root.style.backgroundImage = "url(https://i.pinimg.com/originals/9e/28/38/9e28380f979b4efec8951da68558519f.jpg)";
     } else {
-      root.style.backgroundImage = "url(https://c.wallhere.com/photos/81/6b/leaves_plants_green_background_blur-626705.jpg!d)";
+      root.style.backgroundImage = "url(https://wallpapercave.com/wp/wp3130553.jpg)";
     }
   }, [isDarkTheme]);
 
