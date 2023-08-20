@@ -9,7 +9,7 @@ const ROUTES = {
     MYPLANTS: "/myplants",
     FAVPLANTS: "/favplants",
     CART: "/cart",
-    CREATEPLANT: "/createplant",
+    ADDPLANT: "/addplant",
     PLANTINFO: "/plantinfo/:id",
     CALLING: "/call/:phone",
     CRM: "/crm",

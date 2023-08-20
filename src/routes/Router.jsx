@@ -8,7 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import SuperProtectedRoute from "../components/SuperProtectedRoute";
 import LogoutPage from "../pages/LogoutPage";
 import FavPlantsPage from "../pages/FavPlantsPage";
-import CreatePlantPage from "../pages/CreatePlantPage";
+import AddPlantPage from "../pages/AddPlantPage";
 import AboutPage from "../pages/AboutPage";
 import CallingPage from "../pages/CallingPage";
 import CRMPage from "../pages/CRMPage";
@@ -49,10 +49,10 @@ const Router = () => {
             <Route path={ROUTES.FAVPLANTS} element={<SuperProtectedRoute
                 needPermission={false}
                 element={<FavPlantsPage />} />} />
-            <Route path={ROUTES.CREATEPLANT} element={<SuperProtectedRoute
+            <Route path={ROUTES.ADDPLANT} element={<SuperProtectedRoute
                 needPermission={true}
                 isBiz={true}
-                element={<CreatePlantPage />} />} />
+                element={<AddPlantPage />} />} />
             <Route path={ROUTES.CRM} element={<SuperProtectedRoute
                 needPermission={true}
                 isAdmin={true}

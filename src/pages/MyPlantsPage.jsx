@@ -114,8 +114,8 @@ const MyPlantsPage = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Typography sx={{ textDecoration: 'none', position: "fixed", right: "10px", bottom: "60px" }} component={Link} color="textPrimary" to={ROUTES.CREATEPLANT} noWrap>
-                <AddCircleIcon color="success" fontSize="large" />
+            <Typography sx={{ textDecoration: 'none', position: "fixed", right: "10px", bottom: "60px" }} component={Link} color="textPrimary" to={ROUTES.ADDPLANT} noWrap>
+                <AddCircleIcon color="error" fontSize="large" />
             </Typography>
         </Box>
     )

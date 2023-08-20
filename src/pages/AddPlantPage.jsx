@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
-const CreatePlantPage = () => {
+const AddPlantPage = () => {
     const [inputState, setInputState] = useState({
         title: "",
         description: "",
@@ -331,4 +331,4 @@ const CreatePlantPage = () => {
     );
 };
 
-export default CreatePlantPage;
+export default AddPlantPage;
