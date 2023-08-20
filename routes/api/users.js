@@ -167,7 +167,7 @@ router.patch("/change-biz/:id",
 //http://localhost:8181/api/users/:id
 router.delete("/deleteUser/:id",
   authmw,
-  permissionsMiddleware(false, true, false, true),
+  permissionsMiddleware(false, true, false, false),
   async (req, res) => {
     try {
       const id = req.params.id;
