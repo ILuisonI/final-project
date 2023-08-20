@@ -90,27 +90,29 @@ const MyPlantsPage = () => {
     }
 
     return (
-        <Box>
+        <Box textAlign="center">
             <h1>My Plants Page</h1>
             <h3>Here you can find all of your plants</h3>
             <hr />
             <Grid container
                 spacing={2}
-                alignItems="center"
-                justify="center"
-                margin={"auto"}>
-                {plantsArr.map((item) => (
-                    <Grid item xs={12} sm={6} lg={4} md={6} key={item._id + Date.now()} >
-                        <PlantComponent
-                            plant={item}
-                            onDelete={handleDeleteFromPlantsArr}
-                            onEdit={handleEditBtn}
-                            isBiz={isBiz}
-                            likePlant={handleLikeBtnClick}
-                            addToCart={handleAddToCartBtnClick}
-                        />
+                sx={{ flexGrow: 1 }}>
+                <Grid item xs={12}>
+                    <Grid container justifyContent="center" spacing={2}>
+                        {plantsArr.map((item) => (
+                            <Grid item key={item._id + Date.now()} >
+                                <PlantComponent
+                                    plant={item}
+                                    onDelete={handleDeleteFromPlantsArr}
+                                    onEdit={handleEditBtn}
+                                    isBiz={isBiz}
+                                    likePlant={handleLikeBtnClick}
+                                    addToCart={handleAddToCartBtnClick}
+                                />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
+                </Grid>
             </Grid>
             <Typography sx={{ textDecoration: 'none', position: "fixed", right: "10px", bottom: "60px" }} component={Link} color="textPrimary" to={ROUTES.CREATEPLANT} noWrap>
                 <AddCircleIcon color="success" fontSize="large" />

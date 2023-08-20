@@ -101,35 +101,41 @@ const CartPage = () => {
     }
 
     return (
-        <Box margin={"auto"}>
+        <Box
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center">
             <h1>My Cart Page</h1>
             <h3>Here you can find all the
                 plants in your cart</h3>
+            <hr />
             <Grid container
                 spacing={2}
-                alignItems="center"
-                justify="center"
-                margin={"auto"}>
-                {plantsArr.map((item) => (
-                    <Grid item xs={12} sm={6} lg={4} md={6} key={item._id + Date.now()} >
-                        <CardComponent
-                            plant={item}
-                            onDelete={handleDeleteFromPlantsArr}
-                            onEdit={handleEditBtn}
-                            isAdmin={isAdmin}
-                            isBiz={isBiz}
-                            likePlant={handleLikeBtnClick}
-                            addToCart={handleAddToCartBtnClick}
-                        />
+                sx={{ flexGrow: 1 }}>
+                <Grid item xs={12}>
+                    <Grid container justifyContent="center" spacing={2}>
+                        {plantsArr.map((item) => (
+                            <Grid item key={item._id + Date.now()} >
+                                <CardComponent
+                                    plant={item}
+                                    onDelete={handleDeleteFromPlantsArr}
+                                    onEdit={handleEditBtn}
+                                    isAdmin={isAdmin}
+                                    isBiz={isBiz}
+                                    likePlant={handleLikeBtnClick}
+                                    addToCart={handleAddToCartBtnClick}
+                                />
+                            </Grid>
+                        ))}
+                        <Grid item xs={12} key={"sum"}>
+                            <h3>Total: {sum}$</h3>
+                        </Grid>
+                        <Grid item xs={12} key={"buyNow"}>
+                            <Button color="success" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                                Buy Now
+                            </Button>
+                        </Grid>
                     </Grid>
-                ))}
-                <Grid item xs={12} key={"sum"}>
-                    <h3>Total: {sum}$</h3>
-                </Grid>
-                <Grid item xs={12} key={"buyNow"}>
-                    <Button color="success" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                        Buy Now
-                    </Button>
                 </Grid>
             </Grid>
         </Box>
