@@ -33,8 +33,8 @@ const RegisterPage = () => {
         city: "",
         street: "",
         houseNumber: "",
-        zipCode: "",
-        biz: false,
+        zip: "",
+        isBusiness: false,
     });
 
     const [resetInputState] = useState({
@@ -51,8 +51,8 @@ const RegisterPage = () => {
         city: "",
         street: "",
         houseNumber: "",
-        zipCode: "",
-        biz: false,
+        zip: "",
+        isBusiness: false,
     });
 
     const [showErrors, setShowErrors] = useState({
@@ -65,7 +65,7 @@ const RegisterPage = () => {
         city: false,
         street: false,
         houseNumber: false,
-        zipCode: false,
+        zip: false,
     });
 
     const [inputsErrorsState, setInputsErrorsState] = useState(null);
@@ -104,8 +104,8 @@ const RegisterPage = () => {
                     street: inputState.street,
                     houseNumber: inputState.houseNumber,
                     //server won't allow empty zipCode so I made the default value to be 1
-                    zipCode: inputState.zipCode ? inputState.zipCode : 1,
-                    biz: inputState.biz,
+                    zip: inputState.zip ? inputState.zip : 1,
+                    isBusiness: inputState.isBusiness,
                 }
             );
             toast.success('Registration Successful!');
@@ -419,16 +419,16 @@ const RegisterPage = () => {
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 fullWidth
-                                id="zipCode"
+                                id="zip"
                                 label="Zip Code"
-                                name="zipCode"
+                                name="zip"
                                 onChange={handleInputChange}
-                                value={inputState.zipCode}
+                                value={inputState.zip}
                             />
                             {
-                                showErrors.zipCode && inputsErrorsState && inputsErrorsState.zipCode && (
+                                showErrors.zip && inputsErrorsState && inputsErrorsState.zip && (
                                     <Alert severity="warning">
-                                        {inputsErrorsState.zipCode.map(item =>
+                                        {inputsErrorsState.zip.map(item =>
                                             <div key={"imageUrl-errors" + item}>{item}.</div>
                                         )}
                                     </Alert>
@@ -437,7 +437,7 @@ const RegisterPage = () => {
                         <Grid item xs={12}>
                             <FormControlLabel
                                 control={
-                                    <Checkbox id="biz" name="biz" onChange={handleCheckedChange} color="primary" />
+                                    <Checkbox id="isBusiness" name="isBusiness" onChange={handleCheckedChange} color="primary" />
                                 }
                                 label="Business Account"
                             />

@@ -87,18 +87,20 @@ const CRMPage = () => {
             <hr />
             <Grid container
                 spacing={2}
-                alignItems="center"
-                justify="center"
-                margin={"auto"}>
-                {usersArr.map((item) => (
-                    <Grid item xs={12} sm={6} lg={4} md={6} key={item._id + Date.now()} >
-                        <UserCardComponent
-                            user={item}
-                            onDelete={handleDeleteFromUsersArr}
-                            biz={handleBizBtnClick}
-                        />
+                sx={{ flexGrow: 1 }}>
+                <Grid item xs={12}>
+                    <Grid container justifyContent="center" spacing={2}>
+                        {usersArr.map((item) => (
+                            <Grid item key={item._id + Date.now()} >
+                                <UserCardComponent
+                                    user={item}
+                                    onDelete={handleDeleteFromUsersArr}
+                                    biz={handleBizBtnClick}
+                                />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
+                </Grid>
             </Grid>
         </Box>
     );

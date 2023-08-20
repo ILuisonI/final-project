@@ -5,7 +5,7 @@ const profileSchema = Joi.object({
     firstName: Joi.string().min(2).max(256).required(),
     middleName: Joi.string().min(2).max(256).allow(''),
     lastName: Joi.string().min(2).max(256).required(),
-    phone: Joi.string().min(9).max(14).required(),
+    phone: Joi.string().min(9).max(9).required(),
     email: Joi.string().min(6).max(256).email({ tlds: { allow: false } }).required(),
     imageUrl: Joi.string().min(6).max(1024).allow(''),
     imageAlt: Joi.string().min(6).max(1024).allow(''),

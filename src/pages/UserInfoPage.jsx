@@ -53,9 +53,8 @@ const UserInfoPage = () => {
                     navigate(ROUTES.HOME);
                     return;
                 }
-                const { data } = await axios.get("/users/GetAllUsers");
-                let newUser = { ...(data.users.filter((user) => user._id === id)) };
-                setUser(newUser[0]);
+                const { data } = await axios.get(`/users/userInfo/${id}`)
+                setUser(data);
             } catch (err) {
                 console.log("Error From Axios:", err.message);
             }
@@ -88,24 +87,9 @@ const UserInfoPage = () => {
 
     const handleBizBtnClick = async (isBiz) => {
         try {
-            await axios.put("users/userInfo/" + user._id, {
-                firstName: user.firstName,
-                middleName: user.middleName,
-                lastName: user.lastName,
-                phone: user.phone,
-                email: user.email,
-                imageUrl: user.imageUrl,
-                imageAlt: user.imageAlt,
-                state: user.state,
-                country: user.country,
-                city: user.city,
-                street: user.street,
-                houseNumber: user.houseNumber,
-                zip: user.zip,
-                biz: isBiz,
-            });
+            await axios.patch("users/change-biz/" + user._id);
         } catch (err) {
-            console.log("Edit Error:", err.message);
+            console.log("Biz Error:", err.message);
         }
     };
 
@@ -178,7 +162,7 @@ const UserInfoPage = () => {
                                 }}>
                                     <FormControlLabel
                                         control={
-                                            <Checkbox checked={isBiz} id="biz" name="biz" onChange={handleCheckedChange} color="primary" />
+                                            <Checkbox checked={isBiz} id="isBusiness" name="isBusiness" onChange={handleCheckedChange} color="primary" />
                                         }
                                         label="Business Account"
                                     />
